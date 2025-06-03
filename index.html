@@ -53,6 +53,8 @@
         const generateOne = (array) => {
             const randomIndex = Math.floor(Math.random() * array.length);
             return array[randomIndex];
+            if (arr[randomIndex] != previousChoice) {
+            result[i] = arr[randomIndex];
         };
 
         const result = [];
