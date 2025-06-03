@@ -49,15 +49,7 @@
     const TIPURI = ["∆", "∆#11", "∆#5", "∆#9", "-7", "-7b9", "-7b6", "-ø7", "-∆", "7", "7b9", "7#11", "7b13", "sus∆", "-7sus4", "-susb9", "susb6"];
     const NOTE = ["A", "B", "C", "D", "F", "G", "F#", "C#", "Ab", "Bb", "Eb", "Db"];
 
-    // Generate all unique combinations once
-    let allChords = [];
-    for (const note of NOTE) {
-        for (const type of TIPURI) {
-            allChords.push(`${note}${type}`);
-        }
-    }
-
-    // Shuffle the full set of chords
+    // Shuffle helper
     const shuffleArray = (array) => {
         for (let i = array.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -66,26 +58,31 @@
         return array;
     };
 
-    let shuffledChords = shuffleArray([...allChords]); // clone & shuffle
-
     const generateAll = (count) => {
-        // If not enough chords left, reshuffle
-        if (shuffledChords.length < count) {
-            shuffledChords = shuffleArray([...allChords]);
+        if (count > NOTE.length) {
+            console.warn("Requested more chords than available unique notes.");
+            count = NOTE.length;
         }
 
-        // Take the first `count` chords and remove them from the array
-        const result = shuffledChords.slice(0, count);
-        shuffledChords = shuffledChords.slice(count);
+        // Step 1: Shuffle NOTES to get unique root notes
+        const uniqueNotes = shuffleArray([...NOTE]).slice(0, count);
+
+        // Step 2: Assign a random chord type to each
+        const result = uniqueNotes.map(note => {
+            const type = TIPURI[Math.floor(Math.random() * TIPURI.length)];
+            return `${note}${type}`;
+        });
+
         return result;
     };
 
     const displayChords = () => {
         const output = document.getElementById("output");
-        const chords = generateAll(4); // Change 4 to any count ≤ 204
+        const chords = generateAll(4); // Choose number of chords (≤ 12)
         output.innerHTML = chords.map(chord => `<span style="margin-right: 10px;">${chord}</span>`).join('');
     };
 </script>
+
 
 
 </body>
