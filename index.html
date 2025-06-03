@@ -1,1 +1,76 @@
-<h1> hello</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chord Generator</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background-color: #f4f4f4;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 45px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        #output {
+            display: flex;
+            gap: 40px;
+            color: #333;
+            text-align: center;
+            font-size: xxx-large;
+        }
+        .container {
+            display: flex;
+            gap: 200px;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="output"></div>
+    <button onclick="displayChords()">Generate Chords</button>
+</div>
+
+<script>
+    const generateAll = (count) => {
+        const TIPURI = ["∆", "∆#11", "∆#5", "∆#9", "-7", "-7b9", "-7b6", "-ø7", "-∆", "7", "7b9", "7b9", "7#11", "7b13", "sus∆", "-7sus4", "-susb9", "susb6"];
+        const NOTE = ["A", "B", "C", "D", "F", "G", "F#", "C#", "Ab", "Bb", "Eb", "Db"];
+
+        const generateOne = (array) => {
+            const randomIndex = Math.floor(Math.random() * array.length);
+            return array[randomIndex];
+        };
+
+        const result = [];
+        for (let i = 0; i < count; i++) {
+            const key = generateOne(NOTE);
+            const value = generateOne(TIPURI);
+            result.push(`${key}${value}`);
+        }
+
+        return result;
+    };
+
+    const displayChords = () => {
+        const output = document.getElementById("output");
+        const chords = generateAll(4);
+        output.innerHTML = chords.map(chord => `<span style="margin-right: 10px;">${chord}</span>`).join('');
+    };
+</script>
+
+</body>
+</html>
