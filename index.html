@@ -53,18 +53,6 @@
         const generateOne = (array) => {
             const randomIndex = Math.floor(Math.random() * array.length);
             return array[randomIndex];
-            void List<int> randomizeList(List<int> argList) // take list in, randomize order
-    {
-        for (int i = 0; i < argList.Count; i++)
-        {
-            int temp = argList[i];
-            int rand = Random.Range(i, argList.Count);
-            argList[i] = argList[rand];
-            argList[rand] = temp;
-            Debug.Log(argList[i]);
-        }
-        return argList;
-    }
         };
 
         const result = [];
