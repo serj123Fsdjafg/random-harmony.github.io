@@ -47,22 +47,31 @@
 
 <script>
     const generateAll = (count) => {
-        const TIPURI = ["∆", "∆#11", "∆#5", "∆#9", "-7", "-7b9", "-7b6", "-ø7", "-∆", "7", "7b9", "7b9", "7#11", "7b13", "sus∆", "-7sus4", "-susb9", "susb6"];
-        const NOTE = ["A", "B", "C", "D", "F", "G", "F#", "C#", "Ab", "Bb", "Eb", "Db"];
+    const TIPURI = ["∆", "∆#11", "∆#5", "∆#9", "-7", "-7b9", "-7b6", "-ø7", "-∆", "7", "7b9", "7#11", "7b13", "sus∆", "-7sus4", "-susb9", "susb6"];
+    const NOTE = ["A", "B", "C", "D", "F", "G", "F#", "C#", "Ab", "Bb", "Eb", "Db"];
 
-        const generateOne = (array) => {
-            const randomIndex = Math.floor(Math.random() * array.length);
-            return array[randomIndex];
-        };
-
-        const result = [];
-        for (let i = 0; i < count; i++) {
-            const key = generateOne(NOTE);
-            const value = generateOne(TIPURI);
-            result.push(`${key}${value}`);
+    // Step 1: Create all possible combinations
+    const allChords = [];
+    for (const note of NOTE) {
+        for (const type of TIPURI) {
+            allChords.push(`${note}${type}`);
         }
+    }
 
-        return result;
+    // Step 2: Shuffle all combinations
+    const shuffleArray = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    };
+
+    const shuffled = shuffleArray(allChords);
+
+    // Step 3: Return the first `count` unique chords
+    return shuffled.slice(0, count);
+        }
     };
 
     const displayChords = () => {
